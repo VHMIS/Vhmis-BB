@@ -6,8 +6,30 @@ Vhmis BB is Pure JS Template Engine.
 ## Goals
 
 - [ ] No check syntax
-- [ ] Support ``if``, ``each``
-- [ ] Support ``layout`` and ``include`` 
+- [ ] Support ``if``, ``each`` with ``break`` and ``continue``
+- [ ] Support ``layout`` and ``include``
+
+## Syntax
+
+### Print
+
+    {{ pure_js_variable }}
+
+Example
+
+    {{ work.title }}
+    
+ ### IF
+ 
+    {{ if pure_js_condition }}
+        ...
+    {{ endif }}
+ 
+ Example
+
+    {{ if a > 2 && b.js == 'js' }}
+        ...
+    {{ endif }}
 
 ## Example
 
