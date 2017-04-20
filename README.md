@@ -18,7 +18,7 @@ Vhmis BB is Pure JS Template Engine.
         </head>
         <body>
             <h1>Hello {{ name }}</h1>
-            <p>Hava a nice day!</p>
+            <p>Have a nice day!</p>
             {{ if fun }}
                 <p>And happy</p>
             {{ endif }}
@@ -65,14 +65,14 @@ And result
         </head>
         <body>
             <h1>Hello BB</h1>
-            <p>Hava a nice day!</p>
+            <p>Have a nice day!</p>
             <p>And happy</p>
             <div>
                 1. - code01 - Code 1<br>
                 (-- Morning work)<br>
             </div>
             <div>
-                2. - code02 - Code 1<br>
+                2. - code02 - Code 2<br>
                 (-- Morning work)<br>
             </div>
             <div>
@@ -87,4 +87,3 @@ And result
             </div>
         </body>
     </html>
-    `;
