@@ -10,8 +10,12 @@ let temp = `
     <body>
         <h1>Hello {{ name }}</h1>
         <p>Hava a nice day!</p>
-        {{ if fun }}
-            happy
+        {{ if time < 12 }}
+            morning
+        {{ elseif time < 18 }}
+            afternoon
+        {{ else }}
+            night
         {{ endif }}
         {{ each i in 'abcdefgh' }}
             {{ continue ___key < 2 }}
@@ -33,7 +37,7 @@ let template = vhmisjstemp.compile(temp);
 console.log(template({
     'title': 'Hello World',
     'name': 'Vhmis',
-    'fun': true,
+    'time': 10,
     'abc': [
         'aaaa',
         'aaaa1',
