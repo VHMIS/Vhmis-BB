@@ -43,10 +43,7 @@ let parserJS = function(code) {
         if (found[1] == 'continue') return 'if(' + found[2] + ') {\n return true;\n}';
         if (found[1] == 'break') return 'if(' + found[2] + ') {\n return false;\n}';
         if (found[3] == 'each') return 'each(' + found[5] + ', function(' + found[4] + ', ___key, ___count, ___obj) {';
-        if (found[1] == 'include') {
-            //let mixin = compileFile(found[2]);
-            return parserInclude(found[2]);
-        }
+        if (found[1] == 'include') return parserInclude(found[2]);
     }
 
     // Parse code line has only keyword
