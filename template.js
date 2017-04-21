@@ -31,61 +31,53 @@ let each = ` each = function(obj, func) {
     return obj;
 }`;
 
-let praserJS = function(code) {
-    console.log(code);
-    regexEndTag = /end(if|each)/g
-    regexOpenTag = /(if|elseif|continue|break) (.*)|(each) (.*) in (.*)/g;
-
-    let found = regexEndTag.exec(code);
-    if (found !== null) {
-        if (found[1] == 'if') return '}';
-        if (found[1] == 'each') return '})';
-    }
-
-    found = regexOpenTag.exec(code);
+let parserJS = function(code) {
+    // Parse code line has parameter
+    let regex = /(if|elseif|continue|break) (.*)|(each) (.*) in (.*)/g;
+    let found = regex.exec(code);
     if (found !== null) {
         if (found[1] == 'if') return 'if(' + found[2] + ') {';
         if (found[1] == 'elseif') return '} else if(' + found[2] + ') {';
         if (found[1] == 'continue') return 'if(' + found[2] + ') {\n return true;\n}';
         if (found[1] == 'break') return 'if(' + found[2] + ') {\n return false;\n}';
-        if (found[3] == 'each') return 'each(' + found[5] +', function(' + found[4] + ', ___key, ___count, ___obj) {';
+        if (found[3] == 'each') return 'each(' + found[5] + ', function(' + found[4] + ', ___key, ___count, ___obj) {';
     }
 
+    // Parse code line has only keyword
     if (code == 'break') return 'return false;';
     if (code == 'continue') return 'return true;';
     if (code == 'else') return '} else {';
+    if (code == 'endif') return '}';
+    if (code == 'endeach') return '})';
 
-
+    // String return
     return '__temp += ' + code + ';';
 }
 
-let praser = function(string) {
-    let regex = /{{ (.*?) }}/g;
+let parser = function(string) {
+    let regexBBTag = /{{ (.*?) }}/g;
     let cursor = 0;
     let left = '';
     let code = "let __temp = '';\nwith(__data||{}) {";
 
-    while (found = regex.exec(string)) {
+    while (found = regexBBTag.exec(string)) {
         left = string.slice(cursor, found.index);
         code += "__temp += `" + left + "`;\n";
-        jsCode = praserJS(found[1]);
+        jsCode = parserJS(found[1]);
         code += jsCode + '\n';
         cursor = found.index + found[0].length;
     }
 
     let right = string.substr(cursor, string.length - cursor);
     code += "__temp += `" + right + "`;\n";
-
     code += '}\nreturn __temp;';
     return code;
 }
 
 let compile = function(string) {
-    console.log(praser(string));
-    return new Function('', each + '\ntemplate = function(__data) {\n' + praser(string) + '\n};return template;')();
+    return new Function('', each + '\ntemplate = function(__data) {\n' + parser(string) + '\n};return template;')();
 }
 
 module.exports = {
-    compile: compile,
-    each: each,
+    compile: compile
 };
