@@ -9,7 +9,7 @@
 
 ### Process
 
-in praser
+in parser
 
 - -> found tag with keywork 'include'
  - -> check cache (--skip in current)
