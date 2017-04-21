@@ -15,7 +15,7 @@ let each = ` each = function(obj, func) {
             count++;
         }
 
-        return obj
+        return obj;
     }
 
     let key = Object.keys(obj)
@@ -34,7 +34,7 @@ let each = ` each = function(obj, func) {
 let praserJS = function(code) {
     console.log(code);
     regexEndTag = /end(if|each)/g
-    regexOpenTag = /(if) (.*)|(each) (.*) in (.*)/g;
+    regexOpenTag = /(if|continue|break) (.*)|(each) (.*) in (.*)/g;
 
     let found = regexEndTag.exec(code);
     if (found !== null) {
@@ -45,8 +45,13 @@ let praserJS = function(code) {
     found = regexOpenTag.exec(code);
     if (found !== null) {
         if (found[1] == 'if') return 'if(' + found[2] + ') {';
+        if (found[1] == 'continue') return 'if(' + found[2] + ') {\n return true;\n}';
+        if (found[1] == 'break') return 'if(' + found[2] + ') {\n return false;\n}';
         if (found[3] == 'each') return 'each(' + found[5] +', function(' + found[4] + ', ___key, ___count, ___obj) {';
     }
+
+    if (code == 'break') return 'return false;';
+    if (code == 'continue') return 'return true;';
 
     return '__temp += ' + code + ';';
 }

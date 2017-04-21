@@ -13,7 +13,11 @@ let temp = `
         {{ if fun }}
             happy
         {{ endif }}
-        {{ each i in abc }}
+        {{ each i in 'abcdefgh' }}
+            {{ continue ___key < 2 }}
+            {{ if i == 'g' }}
+                {{ break }}
+            {{ endif }}
             {{ i }} - {{ ___key }} - {{ ___count }} <br>
         {{ endeach }}
     </body>
@@ -32,6 +36,7 @@ console.log(template({
     'fun': true,
     'abc': [
         'aaaa',
-        'aaaa1'
+        'aaaa1',
+        'fdjfjdfjd'
     ]
 }));
