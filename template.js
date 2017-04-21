@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 let each = ` each = function(obj, func) {
     if (obj == null) {
         return obj;
@@ -78,6 +80,12 @@ let compile = function(string) {
     return new Function('', each + '\ntemplate = function(__data) {\n' + parser(string) + '\n};return template;')();
 }
 
+let compileFile = function(filename) {
+    let string = fs.readFileSync(filename, 'utf8');
+    return compile(string);
+}
+
 module.exports = {
-    compile: compile
+    compile: compile,
+    compileFile: compileFile,
 };

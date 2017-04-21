@@ -1,5 +1,6 @@
 var template = require('./template.js');
 
 module.exports = {
-    compile: template.compile
+    compile: template.compile,
+    compileFile: template.compileFile
 };

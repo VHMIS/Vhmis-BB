@@ -1,6 +1,3 @@
-const bb = require('./index.js');
-
-let temp = `
 <html>
     <head>
         <title>{{ title }}</title>
@@ -24,20 +21,3 @@ let temp = `
         {{ endeach }}
     </body>
 </html>
-`;
-// {{ if fun }}
-//     {{ break }}
-// {{ endif }}
-// Count {{ %count% }} {{ i }} {{ %k% }}
-
-let data = {
-    'title': 'Hello World',
-    'name': 'Vhmis',
-    'time': 10
-}
-
-let template = bb.compile(temp);
-console.log(template(data));
-
-template = bb.compileFile('example.bb');
-console.log(template(data));
