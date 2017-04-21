@@ -22,6 +22,7 @@ let temp = `
             {{ endif }}
             {{ i }} - {{ ___key }} - {{ ___count }} <br>
         {{ endeach }}
+        {{ include copyright.bb }}
     </body>
 </html>
 `;
@@ -33,7 +34,8 @@ let temp = `
 let data = {
     'title': 'Hello World',
     'name': 'Vhmis',
-    'time': 10
+    'time': 10,
+    'year': 2017
 }
 
 let template = bb.compile(temp);

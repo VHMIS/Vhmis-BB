@@ -19,5 +19,6 @@
             {{ endif }}
             {{ i }} - {{ ___key }} - {{ ___count }} <br>
         {{ endeach }}
+        {{ include copyright.bb }}
     </body>
 </html>
