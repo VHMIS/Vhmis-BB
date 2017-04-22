@@ -52,6 +52,7 @@ let parserJS = function(code) {
     if (code == 'else') return '} else {';
     if (code == 'endif') return '}';
     if (code == 'endeach') return '})';
+    if (code == '__content__') return '__content__';
 
     // String return
     return '__temp += ' + code + ';';
@@ -63,6 +64,18 @@ let parserInclude = function(filename) {
 }
 
 let parser = function(string) {
+    // Check layout
+    // Layout must be declared {{ layout filename }} at first line of template file (or string)
+    let firstNewLinePos = string.indexOf("\n");
+    let firstLine = string.substring(0, firstNewLinePos);
+    let regexBBLayout = /{{ layout (.*?) }}/g;
+    let layout = regexBBLayout.exec(firstLine);
+    if (layout != null) {
+        layout = layout[1];
+        string = string.substring(firstNewLinePos + 1);
+    }
+
+    // Parse main contain
     let regexBBTag = /{{ (.*?) }}/g;
     let cursor = 0;
     let left = '';
@@ -78,6 +91,13 @@ let parser = function(string) {
 
     let right = string.substr(cursor, string.length - cursor);
     code += "__temp += `" + right + "`;\n";
+
+    // Parse layout if available
+    if (layout) {
+        let layoutCode = parserInclude(layout);
+        code = layoutCode.replace('__content__', code);
+    }
+
     return code;
 }
 
@@ -93,7 +113,17 @@ let compileFile = function(filename) {
     return compile(string);
 }
 
+let render = function(string, data = {}) {
+    return compile(string)(data);
+}
+
+let renderFile = function(filename, data = {}) {
+    return compileFile(filename)(data);
+}
+
 module.exports = {
     compile: compile,
     compileFile: compileFile,
+    render: render,
+    renderFile: renderFile,
 };

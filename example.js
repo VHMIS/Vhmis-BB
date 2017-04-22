@@ -38,8 +38,13 @@ let data = {
     'year': 2017
 }
 
-let template = bb.compile(temp);
-console.log(template(data));
+// let template = bb.compile(temp);
+// console.log(template(data));
+//
+// template = bb.compileFile('example.bb');
+// console.log(template(data));
 
-template = bb.compileFile('example.bb');
-console.log(template(data));
+// Layout example
+console.log(bb.renderFile('index.bb', {
+    title: 'Title'
+}));
