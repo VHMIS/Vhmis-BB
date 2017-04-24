@@ -4,5 +4,7 @@
     </head>
     <body>
         {{ __content__ }}
+
+        {{ include include/footer.bb }}
     </body>
 </html>

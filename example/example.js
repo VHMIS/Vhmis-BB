@@ -1,4 +1,5 @@
-const bb = require('./index.js');
+const bb = require('../');
+const path = require('path');
 
 let temp = `
 <html>
@@ -26,10 +27,6 @@ let temp = `
     </body>
 </html>
 `;
-// {{ if fun }}
-//     {{ break }}
-// {{ endif }}
-// Count {{ %count% }} {{ i }} {{ %k% }}
 
 let data = {
     'title': 'Hello World',
@@ -38,13 +35,16 @@ let data = {
     'year': 2017
 }
 
-// let template = bb.compile(temp);
-// console.log(template(data));
-//
-// template = bb.compileFile('example.bb');
-// console.log(template(data));
+let template = bb.compile(temp, {
+    path: path.dirname('./')
+});
+
+console.log(template(data));
+
+template = bb.compileFile('example.bb');
+console.log(template(data));
 
 // Layout example
-console.log(bb.renderFile('index.bb', {
+console.log(bb.renderFile(path.join(__dirname, '../example') + '/index.bb', {
     title: 'Title'
 }));
