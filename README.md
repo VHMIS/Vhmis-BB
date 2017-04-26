@@ -70,11 +70,12 @@ or
     `
     ...
 
-Render/Compile
+## Render/Compile
 
 - Render : read template and output string (``render(string, data)`` or ``renderFile(file, data)``)
 - Compile : read template and output js function to use render template later (``compile(string, options)``, ``compileFile(string, options)``)
 
+### Example
 
     // Render
     let bb = require('vhmis-bb')
