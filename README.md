@@ -70,6 +70,27 @@ or
     `
     ...
 
+Render/Compile
+
+- Render : read template and output string (``render(string, data)`` or ``renderFile(file, data)``)
+- Compile : read template and output js function to use render template later (``compile(string, options)``, ``compileFile(string, options)``)
+
+
+    // Render
+    let bb = require('vhmis-bb')
+    bb.renderFile('index.bb', {
+        'name': 'Vhmis BB',
+        '_path': '/opt/project'
+    });
+
+    // Compile
+    let template = bb.compileFile('index.bb', {
+        'path': '/opt/project'
+    });
+    template({
+        'name': 'Vhmis BB'
+    })
+
 ## Built-in tag
 
 ### Control flow
@@ -119,3 +140,91 @@ for/each
     // <li>4 - 5 - S</li>
     // <li>5 - 6 - B</li>
     // <li>6 - 7 - B</li>
+
+## Layout
+
+### Layout
+
+Layout is BB template file with tag ``{{ __content__ }}``
+
+    // layout.bb
+    <html>
+        <head>
+        </head>
+        <body>
+        {{ __content__ }}
+        </body>
+    </html>
+
+Other files use layout by add ``{{ layout layout-file }}`` in the first line
+
+    // index.bb
+    {{ layout layout.bb }}
+    Hello Index
+
+Output
+
+    <html>
+        <head>
+        </head>
+        <body>
+            Hello Index
+        </body>
+    </html>
+
+### Include
+
+Bb template files can include content of other files by ``{{ include file }}`` tag
+
+    // header.bb
+    <title>{{ title }}</title>
+
+    // footer.bb
+    {{ year }} &copy; VHMISBB
+
+    // layout.bb
+    <html>
+        <head>
+            {{ include header.bb }}
+        </head>
+        <body>
+        {{ __content__ }}
+        {{ include footer.bb }}
+        </body>
+    </html>
+
+### Path
+
+Use option path to set root path of template folder
+
+    // Folder
+    // /project/template/template1
+    //     /_layout
+    //            /default.bb
+    //            /news.bb
+    //     /_include
+    //              /google-analytics.bb
+    //     /index.bb
+    //     /about
+    //           /contact.bb
+    //           /member.bb
+
+    // Set path
+    let rootPath = '/project/template/template1'
+    bb.renderFile('index.bb', {
+        _path: rootPath
+        ...
+    })
+
+    bb.renderFile('about/index.bb', {
+        _path: rootPath
+        ...
+    })
+
+Layout and include path based on path in option
+
+    // Use layout
+    {{ layout _layout/news.bb }}
+
+    // Use include
+    {{ include _include/google-analytics.bb }}
