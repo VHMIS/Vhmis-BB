@@ -12,26 +12,22 @@ let each = ` each = function(obj, func) {
         const length = obj.length
         let count = 1;
         while (++index < length) {
-            if (func(obj[index], index, count, obj) === false) {
+            if (func(obj[index], index, count) === false) {
                 break;
             }
             count++;
         }
-
-        return obj;
     }
 
     let key = Object.keys(obj)
     const length = key.length
     let count = 1;
     while (++index < length) {
-        if (func(obj[key[index]], key[index], count, obj) === false) {
+        if (func(obj[key[index]], key[index], count) === false) {
             break;
         }
         count++;
     }
-
-    return obj;
 }`;
 
 let parserJS = function(code, options) {
@@ -43,7 +39,7 @@ let parserJS = function(code, options) {
         if (found[1] == 'elseif') return '} else if(' + found[2] + ') {';
         if (found[1] == 'continue') return 'if(' + found[2] + ') {\n return true;\n}';
         if (found[1] == 'break') return 'if(' + found[2] + ') {\n return false;\n}';
-        if (found[3] == 'each') return 'each(' + found[5] + ', function(' + found[4] + ', ___key, ___count, ___obj) {';
+        if (found[3] == 'each') return 'each(' + found[5] + ', function(' + found[4] + ', __key__, __count__) {';
         if (found[1] == 'include') return parserInclude(found[2], options);
     }
 

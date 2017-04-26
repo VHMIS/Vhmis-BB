@@ -17,11 +17,11 @@ let temp = `
             night
         {{ endif }}
         {{ each i in 'abcdefgh' }}
-            {{ continue ___key < 2 }}
+            {{ continue __key__ < 2 }}
             {{ if i == 'g' }}
                 {{ break }}
             {{ endif }}
-            {{ i }} - {{ ___key }} - {{ ___count }} <br>
+            {{ i }} - {{ __key__ }} - {{ __count__ }} <br>
         {{ endeach }}
         {{ include copyright.bb }}
     </body>
