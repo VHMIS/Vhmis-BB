@@ -68,7 +68,7 @@ or
     `
     ...
 
-## Build in tag
+## Built-in tag
 
 ### Control flow
 
