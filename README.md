@@ -4,6 +4,8 @@ Blue Building, named main building at ViethanIT campus.
 
 Vhmis BB is Pure JS Template Engine.
 
+**Work-in-progress**
+
 ## Goals
 
 - Display data from ajax call on web app
